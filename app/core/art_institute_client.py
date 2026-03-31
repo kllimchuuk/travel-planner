@@ -4,7 +4,6 @@ from config import settings
 
 
 class ArtInstituteClient:
-
     def __init__(self):
         self.base_url = settings.ART_INSTITUTE_API_URL
         self.client = httpx.Client(timeout=10.0)
@@ -14,7 +13,7 @@ class ArtInstituteClient:
         params = {
             "q": query,
             "limit": limit,
-            "fields": "id,title,artist_display,place_of_origin,date_display,medium_display"
+            "fields": "id,title,artist_display,place_of_origin,date_display,medium_display",
         }
 
         response = self.client.get(url, params=params)
