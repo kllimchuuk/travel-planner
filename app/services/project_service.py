@@ -5,6 +5,7 @@ from typing import Annotated
 from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 
+from app.core.art_institute_client import art_client
 from app.core.database import get_db
 from app.models.travel_project import TravelProject
 from app.repositories.place_repository import PlaceRepository, get_place_repository
@@ -12,9 +13,8 @@ from app.repositories.project_repository import (
     ProjectRepository,
     get_project_repository,
 )
-from app.schemas.place import PlaceCreate, ProjectCreateWithPlaces
+from app.schemas.place import ProjectCreateWithPlaces
 from app.schemas.project import (
-    ProjectCreate,
     ProjectListResponse,
     ProjectResponse,
     ProjectUpdate,
@@ -51,17 +51,9 @@ class ProjectService:
             size=size,
         )
 
-    def create_project(self, data: ProjectCreate) -> ProjectResponse:
-        project = self._project_repository.create(**data.model_dump())
-        self._db.commit()
-        self._db.refresh(project)
-        return ProjectResponse.model_validate(project)
-
     def create_project_with_places(
         self, data: ProjectCreateWithPlaces
     ) -> ProjectResponse:
-        from app.core.art_institute_client import art_client
-
         places = data.places or []
         if len(places) > 10:
             raise HTTPException(

@@ -4,8 +4,6 @@ services:
     container_name: travel_planner_api
     ports:
       - "8000:8000"
-    volumes:
-      - db_data:/app
     environment:
       APP_NAME: ${APP_NAME}
       DEBUG: ${DEBUG}
@@ -13,6 +11,3 @@ services:
       ART_INSTITUTE_API_URL: ${ART_INSTITUTE_API_URL}
       BASIC_AUTH_USERNAME: ${BASIC_AUTH_USERNAME}
       BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD}
-
-volumes:
-  db_data:
