@@ -1,11 +1,13 @@
 from fastapi import APIRouter, Depends, status
 
+from app.core.dependencies import get_current_user
 from app.schemas.place import PlaceCreate, PlaceListResponse, PlaceResponse, PlaceUpdate
 from app.services.place_service import PlaceService, get_place_service
 
 router = APIRouter(
     prefix="/api/v1/projects",
     tags=["places"],
+    dependencies=[Depends(get_current_user)],
 )
 
 
