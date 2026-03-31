@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.core.database import Base, engine
+from app.models import project_place, travel_project  # noqa: F401
 from config import settings
 
 
