@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from app.core.database import Base, engine
 from app.models import project_place, travel_project
+from app.routers import places, projects
 from config import settings
 
 
@@ -19,6 +20,10 @@ app = FastAPI(
     description="Travel Planner API — manage travel projects and places to visit.",
     lifespan=lifespan,
 )
+
+
+app.include_router(projects.router)
+app.include_router(places.router)
 
 
 @app.get("/health", tags=["Health"])
