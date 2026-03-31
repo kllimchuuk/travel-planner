@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status
 
+from app.core.dependencies import get_current_user
 from app.schemas.place import ProjectCreateWithPlaces
 from app.schemas.project import ProjectListResponse, ProjectResponse, ProjectUpdate
 from app.services.project_service import ProjectService, get_project_service
@@ -7,6 +8,7 @@ from app.services.project_service import ProjectService, get_project_service
 router = APIRouter(
     prefix="/api/v1/projects",
     tags=["projects"],
+    dependencies=[Depends(get_current_user)],
 )
 
 
