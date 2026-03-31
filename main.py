@@ -1,0 +1,25 @@
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI
+
+from app.core.database import Base, engine
+from config import settings
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(
+    title=settings.APP_NAME,
+    version="1.0.0",
+    description="Travel Planner API — manage travel projects and places to visit.",
+    lifespan=lifespan,
+)
+
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    return {"status": "ok"}
